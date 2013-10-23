@@ -1,72 +1,4 @@
 <?php
-//include('func.php');
-//echo "String memory usage test.\n\n";
-//$base_memory_usage = memory_get_usage();
-//$base_memory_usage = memory_get_usage();
-// 
-//echo "Start\n";
-//memoryUsage(memory_get_usage(), $base_memory_usage);
-// 
-//$a = someBigValue();
-// 
-//echo "String value setted\n";
-//memoryUsage(memory_get_usage(), $base_memory_usage);
-// 
-//$a = 10000;
-// 
-//echo "String value unsetted\n";
-//memoryUsage(memory_get_usage(), $base_memory_usage);
-
-
-//$a = 19;
-//
-//
-//$b = &$a;
-//
-////echo 'a - ' . $a . PHP_EOL; 
-////echo 'b - ' . $b . PHP_EOL;
-//
-//
-//
-//$b++;
-//
-//echo 'a - ' . $a . PHP_EOL; 
-//echo 'b - ' . $b . PHP_EOL;
-
-
-//var_dump( $var1 );
-
-
-//ini_set('display_errors', 1);
-//error_reporting(-1);
-//
-//
-//$a = array( 1 , 2 , 3 ); 
-//$b =& $a ; 
-//$c =& $a [ 2 ]; 
-//
-//xdebug_debug_zval ('refs' );
-
-// reqursion
-//function buildTree( $maxlevel, $parentid = null, $level = 0 ){
-//    $level++;
-//    
-//    if( $level > $maxlevel )
-//        return  array();
-//    
-//    $children = array();
-//    
-//    
-//    for( $i = 0; $i < 4; $i++ ){
-//        $children[$i] = array( 'parentid' => $parentid, 'level' => $level,  'children' => array(), );
-//        $children[$i]['children'] = buildTree( $maxlevel, $i, $level );
-//    }
-//        
-//    return $children;
-//}
-//
-//print_r('<pre>');
-//print_r( buildTree( 2 ) );
 
 error_reporting(-1);
 ini_set('display_errors', 1);
@@ -95,11 +27,9 @@ LEFT JOIN menutest AS t8 ON t8.parentid = t8.id
 
 WHERE t1.id = 1 ;";
 
-$sql1 = 'select * from menutest';
+$sql1 = 'select * from menutest where parentid = 4';
 
-
-
-$result = pg_query( $dbconn, $sql );
+$result = pg_query( $dbconn, $sql1 );
 
 $arr = array();
 
@@ -110,9 +40,6 @@ pg_close( $dbconn );
 while( $row = pg_fetch_array($result, NULL, PGSQL_ASSOC ) ){
     $arr[] = $row;
 }
-
-
-
 
 function getTree( $items  ) {
     $menuTree = array();
@@ -150,7 +77,25 @@ echo 'script execution time ' . $time;
 
 
 
+$sql3 =  "select t1.* from menutest as t 
+    left join menutest as t1 on t1.parentid = t.id 
+    left join menutest as t2 on t2.parentid = t1.id
+    left join menutest as t3 on t3.parentid = t2.id
+    left join menutest as t4 on t4.parentid = t3.id
+    left join menutest as t5 on t5.parentid = t4.id
 
+    left join menutest as t6 on t6.parentid = t5.id 
+    left join menutest as t7 on t7.parentid = t6.id
+    left join menutest as t8 on t8.parentid = t7.id
+    left join menutest as t9 on t9.parentid = t8.id
+    left join menutest as t10 on t10.parentid = t9.id
+
+    left join menutest as t11 on t11.parentid = t10.id 
+    left join menutest as t12 on t12.parentid = t11.id
+    left join menutest as t13 on t13.parentid = t12.id
+    left join menutest as t14 on t14.parentid = t13.id
+    left join menutest as t15 on t15.parentid = t14.id
+where t.parentid = 3";
   
 
 
